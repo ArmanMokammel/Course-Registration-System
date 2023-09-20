@@ -45,7 +45,7 @@ public class CourseRegistration extends JFrame{
 	}
 	
 	public void createUI() {
-		this.setSize(600, 500);
+		this.setSize(620, 400);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -115,6 +115,7 @@ public class CourseRegistration extends JFrame{
 	    model.addColumn("Title");
 	    model.addColumn("TimeSlot");
 	    model.addColumn("Credit");
+	    model.addColumn("Saved?");
 	    	    
 	    JTable table = new JTable(model);
 	    
@@ -127,9 +128,11 @@ public class CourseRegistration extends JFrame{
 	    table.getColumnModel().getColumn(2).setPreferredWidth(190);
 	    table.getColumnModel().getColumn(3).setPreferredWidth(150);
 	    table.getColumnModel().getColumn(4).setPreferredWidth(60);
+	    table.getColumnModel().getColumn(5).setPreferredWidth(50);
+	    table.getColumnModel().getColumn(5).setCellRenderer(new CustomTableCellRenderer());
 	    
 	    JScrollPane sp = new JScrollPane(table);
-	    sp.setBounds(20, 110, 525, 150);
+	    sp.setBounds(20, 110, 580, 150);
 		
 		this.add(label1);
 		this.add(label2);
@@ -176,7 +179,7 @@ public class CourseRegistration extends JFrame{
 							c.setTimeSlot(t);
 							c.setId(cmbxCourse.getSelectedItem() + "." + cmbxSection.getSelectedItem());
 							model.removeRow(i);
-							model.insertRow(i, new Object[] {i+1, c.getId(), c.getTitle(), c.getTimeSlot(), c.getCredit()});
+							model.insertRow(i, new Object[] {i+1, c.getId(), c.getTitle(), c.getTimeSlot(), c.getCredit(), "No"});
 							return;
 						}
 					}
@@ -187,7 +190,7 @@ public class CourseRegistration extends JFrame{
 				Course c = courseMap.get(course).clone(t);
 				c.setId(c.getId() + "." + cmbxSection.getSelectedItem());
 				courseList.add(c);
-				model.addRow(new Object[] {courseList.size(), c.getId(), c.getTitle(), c.getTimeSlot(), c.getCredit()});
+				model.addRow(new Object[] {courseList.size(), c.getId(), c.getTitle(), c.getTimeSlot(), c.getCredit(), "No"});
 				creditCount += c.getCredit();
 				label4.setText("Total Credit:  " + creditCount);
 			}
@@ -219,6 +222,9 @@ public class CourseRegistration extends JFrame{
 						fr.write(course.getId() + "\t\"" + course.getTitle() + "\"\t" + course.getTimeSlot() + "\t" + course.getCredit() + "\n");
 					}
 					fr.close();
+					for(int i = 0; i < courseList.size(); i++) {
+						model.setValueAt("Yes", i, 5);
+					}
 					JOptionPane.showMessageDialog(CourseRegistration.this, "Saved Successfully!");
 				} catch (IOException e1) {
 					System.out.println("SZZ Error");
