@@ -1,0 +1,5 @@
+UserID: 2232450
+
+Courses:
+CSE173.10	"Discrete Mathmatics"	16:30 - 17:45 ST	3.0
+CSE215.21	"Programming in Java"	15:05 - 16:20 RA	3.0
