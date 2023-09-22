@@ -16,9 +16,6 @@ public class CustomTableCellRenderer extends DefaultTableCellRenderer
             if( value.equals("Yes") )
             {
                 cell.setForeground(Color.GREEN);
-                // You can also customize the Font and Foreground this way
-                // cell.setForeground();
-                // cell.setFont();
             }
             else
             {
